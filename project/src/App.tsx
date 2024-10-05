@@ -1,6 +1,6 @@
-import './App.css';
-import ThreeScene from './components/testScene';
-import BeaconParser from './components/BeaconParser';
+import './App.css'
+import ThreeScene from './components/testScene'
+import Globe from './components/globe.js'
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
 
     /*
     <>
-        <ThreeScene></ThreeScene>
+        <Globe></Globe>
     </>
     */
   );
