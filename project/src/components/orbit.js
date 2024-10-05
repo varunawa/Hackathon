@@ -7,6 +7,14 @@ import beaconTexture from '../assets/beacon.jpg';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import satellite from "../assets/satellite.fbx";
 
+import earthMap from '../assets/00_earthmap1k.jpg';
+import earthBump from '../assets/01_earthbump1k.jpg';
+import earthSpec from '../assets/02_earthspec1k.jpg';
+import earthLights from '../assets/03_earthlights1k.jpg';
+import earthCloud from '../assets/04_earthcloudmap.jpg';
+import earthCloudTrans from '../assets/05_earthcloudmaptrans.jpg';
+import getStarfield from './getStarfield';
+
 const Orbit = () => {
 
   useEffect(() => {
@@ -46,6 +54,9 @@ const Orbit = () => {
       starsTexture,
       starsTexture,
     ]);
+    
+    const stars = getStarfield({ numStars: 2000 });
+    scene.add(stars);
 
     // Load earth texture
     const textureLoader = new THREE.TextureLoader();
