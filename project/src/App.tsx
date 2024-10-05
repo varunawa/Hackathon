@@ -63,7 +63,7 @@ function App() {
             <button onClick={() => setDataView('acceleration')}>Acceleration</button>
           </div>
 
-          <div style={{ position: 'absolute', top: 10, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
+          <div style={{ position: 'absolute', top: 30, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
             
             {dataView === 'position' && (
               <>
