@@ -11,6 +11,7 @@ function App() {
   const [beaconMessages, setBeaconMessages] = useState<BeaconMessage[]>([]); // State to hold the parsed messages
   const [error, setError] = useState<string | null>(null); // State to hold error messages
   const [currentMessageIndex, setCurrentMessageIndex] = useState<number>(0);
+  const [dataView, setDataView] = useState<string>('position');
 
   useEffect(() => {
     // Fetch the raw data from the text file in the public folder
