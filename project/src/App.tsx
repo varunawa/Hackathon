@@ -57,6 +57,12 @@ function App() {
 
       {beaconMessages.length > 0 ? (
         <>
+          <div>
+            <button onClick={() => setDataView('position')}>Position</button>
+            <button onClick={() => setDataView('orientation')}>Orientation</button>
+            <button onClick={() => setDataView('acceleration')}>Acceleration</button>
+          </div>
+
           <div
               style={{
               position: 'absolute',
@@ -96,11 +102,7 @@ function App() {
             )}
           </div>
 
-          <div>
-            <button onClick={() => setDataView('position')}>Position</button>
-            <button onClick={() => setDataView('orientation')}>Orientation</button>
-            <button onClick={() => setDataView('acceleration')}>Acceleration</button>
-          </div>
+          
 
           <ThreeScene
             beaconMessages={[
