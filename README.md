@@ -6,13 +6,14 @@ This project is a 3D visualization tool for beacon data using React, TypeScript,
 ## **List of Libraries and Dependencies**
 
 1. **React**  
-   Used in almost every file that involves JSX or React hooks. The core library used for building the front-end and managing the user interface 
-   in a component-based structure.
+   Used in almost every file that involves JSX or React hooks. The core library used for building 
+   the front-end and managing the user interface in a component-based structure.
    **Purpose:** Handles rendering, state management, and user interactions.
 
 2. **TypeScript**  
-   The presence of TypeScript is implied in files like `parsing.ts` and `App.tsx`, adding static typing to the JavaScript code. TypeScript is 
-   providing type safety and enhancing code quality across these files.
+   The presence of TypeScript is implied in files like `parsing.ts` and `App.tsx`, adding static 
+   typing to the JavaScript code. TypeScript is providing type safety and enhancing code quality 
+   across these files.
    **Purpose:** Provides static types for the project, making development smoother and safer.
 
 3. **Three.js**  
