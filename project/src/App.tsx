@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     // Fetch the raw data from the text file in the public folder
-    fetch('/beaconData.txt')
+    fetch('/updated_beacon_output.txt')
       .then(response => response.text())
       .then(text => {
         try {
