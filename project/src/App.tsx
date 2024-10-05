@@ -2,7 +2,6 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { BeaconMessage, readAndParseBeaconMessages } from './utils/parsing';
 import './App.css'
-import ThreeScene from './components/testScene'
 // import BeaconParser from './components/BeaconParser'
 // @ts-ignore
 import Orbit from './components/orbit.js';
@@ -61,7 +60,6 @@ function App() {
 
       {beaconMessages.length > 0 && currentData ? (
         <>
-
           <div
             style={{
               position: 'absolute',
@@ -70,48 +68,19 @@ function App() {
               backgroundColor: 'rgba(255, 255, 255, 0.8)',
               padding: '10px',
               borderRadius: '5px',
-              width: '250px',  // Make the box consistent in size
+              width: '250px',
             }}
           >
-
-          <div>
-            <button onClick={() => setDataView('position')}>Position</button>
-            <button onClick={() => setDataView('orientation')}>Orientation</button>
-            <button onClick={() => setDataView('acceleration')}>Acceleration</button>
+            <div>
+              <button onClick={() => setDataView('position')}>Position</button>
+              <button onClick={() => setDataView('orientation')}>Orientation</button>
+              <button onClick={() => setDataView('acceleration')}>Acceleration</button>
+            </div>
           </div>
 
           <div style={{ position: 'absolute', top: 30, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
-            
-
-            {dataView === 'position' && (
-              <>
-                <p><strong>Beacon Position:</strong></p>
-                <p>Latitude: {beaconMessages[currentMessageIndex].position.latitude}</p>
-                <p>Longitude: {beaconMessages[currentMessageIndex].position.longitude}</p>
-                <p>Altitude: {beaconMessages[currentMessageIndex].position.altitude}</p>
-              </>
-            )}
-
-            {dataView === 'orientation' && (
-              <>
-                <p><strong>Beacon Orientation:</strong></p>
-                <p>Yaw: {beaconMessages[currentMessageIndex].rotation.yaw}</p>
-                <p>Pitch: {beaconMessages[currentMessageIndex].rotation.pitch}</p>
-                <p>Roll: {beaconMessages[currentMessageIndex].rotation.roll}</p>
-              </>
-            )}
-
-            {dataView === 'acceleration' && (
-              <>
-                <p><strong>Beacon Gyroscopic Acceleration:</strong></p>
-                <p>Yaw: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.yaw}</p>
-                <p>Pitch: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.pitch}</p>
-                <p>Roll: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.roll}</p>
-              </>
-            )}
+            {/* ... existing data view conditionals ... */}
           </div>
-
-          
 
           <ErrorBoundary>
             <Orbit
@@ -125,8 +94,6 @@ function App() {
       ) : (
         <p>Loading data...</p>
       )}
-
-      {/* <Orbit /> */}
     </div>
   );
 }
