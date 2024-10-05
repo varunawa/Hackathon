@@ -1,12 +1,6 @@
 import React, { useEffect } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import earthTexture from '../assets/earth.jpg';
-import starsTexture from '../assets/stars.jpg';
-import beaconTexture from '../assets/beacon.jpg';
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-// import satellite from "../assets/satellite.fbx";
-
 import earthMap from '../assets/00_earthmap1k.jpg';
 import earthBump from '../assets/01_earthbump1k.jpg';
 import earthSpec from '../assets/02_earthspec1k.jpg';
@@ -14,10 +8,10 @@ import earthLights from '../assets/03_earthlights1k.jpg';
 import earthCloud from '../assets/04_earthcloudmap.jpg';
 import earthCloudTrans from '../assets/05_earthcloudmaptrans.jpg';
 import getStarfield from './getStarfield';
-
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+import satellite from '../assets/satellite.fbx'; 
 
 const Orbit = () => {
-
   useEffect(() => {
     const w = window.innerWidth;
     const h = window.innerHeight;
@@ -43,76 +37,62 @@ const Orbit = () => {
     const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Brighter light
     scene.add(ambientLight);
 
-
-    // // Load stars background texture for the scene
-    // const cubeTextureLoader = new THREE.CubeTextureLoader();
-    // scene.background = cubeTextureLoader.load([
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    // ]);
-
-    // Load stars background texture for the scene
-    // const cubeTextureLoader = new THREE.CubeTextureLoader();
-    // scene.background = cubeTextureLoader.load([
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    // ]);
-    
+    // Starfield background
     const stars = getStarfield({ numStars: 2000 });
     scene.add(stars);
 
-
-    // Load earth texture
+    // Load textures
     const textureLoader = new THREE.TextureLoader();
     const earthGeo = new THREE.SphereGeometry(16, 30, 30);
-    const earthMat = new THREE.MeshBasicMaterial({
-      map: textureLoader.load(earthTexture),
+
+    const earthMat = new THREE.MeshPhongMaterial({
+      map: textureLoader.load(earthMap),             // Earth surface texture (diffuse map)
+      bumpMap: textureLoader.load(earthBump),        // Bump map for terrain relief
+      bumpScale: 0.5,                                // Adjust the intensity of the bump effect
+      specularMap: textureLoader.load(earthSpec),    // Specular map for shiny water areas
+      specular: new THREE.Color('grey'),             // Reflective color for specular highlights
     });
+
     const earth = new THREE.Mesh(earthGeo, earthMat);
     scene.add(earth);
 
-    // Load beacon texture and create a new mesh for it
-    const beaconGeo = new THREE.SphereGeometry(2, 30, 30);
-    const beaconMat = new THREE.MeshBasicMaterial({
-      map: textureLoader.load(beaconTexture),
+    // Cloud Layer
+    const cloudGeo = new THREE.SphereGeometry(16.1, 32, 32); // Slightly larger than the Earth sphere
+    const cloudMat = new THREE.MeshLambertMaterial({
+      map: textureLoader.load(earthCloud),           // Cloud texture
+      transparent: true,                             // Enable transparency for clouds
+      opacity: 0.5,                                  // Adjust cloud opacity
     });
-    const beacon = new THREE.Mesh(beaconGeo, beaconMat);
-    earth.add(beacon); // Add beacon as a child of the earth mesh
-    beacon.position.set(20, 0, 0); // Position the beacon
-
-    // Load the FBX model
-    // const loader = new FBXLoader();
-    // loader.load(
-    //   satellite,
-    //   (object) => {
-    //     // Set model position and scale here
-    //     object.position.set(0, 0, 0);
-    //     object.scale.set(0.5, 0.5, 0.5); // Adjust scale as necessary
-    //     scene.add(object);
-    //   },
-    //   (xhr) => {
-    //     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-    //   },
-    //   (error) => {
-    //     console.error('An error occurred while loading the FBX model:', error);
-    //   }
-    // );
+    const clouds = new THREE.Mesh(cloudGeo, cloudMat);
+    scene.add(clouds);                               // Add clouds to the scene
 
     // Animation loop
     const animate = () => {
       earth.rotateY(0.004); // Rotate earth
+      clouds.rotateY(0.002); // Rotate clouds at a slower rate
       orbit.update(); // Update controls
       renderer.render(scene, camera);
     };
 
+    loader.load(
+        satellite,
+        (object) => {
+          satellite = object;                             // Store reference to the loaded beacon
+          object.scale.set(0.05, 0.05, 0.05);          // Scale the beacon model appropriately
+          scene.add(satellite);                           // Add the beacon to the scene
+        },
+        (xhr) => {
+          console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        },
+        (error) => {
+          console.error('An error occurred while loading the FBX model:', error);
+        }
+      );
+  
+      // Track beacon's orbit around the Earth
+      let satelliteAngle = 0;  // Angle to track the beacon's orbit
+
+      
     renderer.setAnimationLoop(animate);
 
     // Resize event listener to adjust camera and renderer when window is resized
