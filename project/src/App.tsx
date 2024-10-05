@@ -1,24 +1,22 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import { BeaconMessage, readAndParseBeaconMessages } from './utils/parsing';
-import './App.css'
-import ThreeScene from './components/testScene'
-// import BeaconParser from './components/BeaconParser'
+import './App.css';
+import ThreeScene from './components/testScene';
 // @ts-ignore
-import Orbit from './components/orbit.js'
-
-
+import Orbit from './components/orbit.js';
 
 function App() {
   const [beaconMessages, setBeaconMessages] = useState<BeaconMessage[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [currentMessageIndex, setCurrentMessageIndex] = useState<number>(0);
   const [dataView, setDataView] = useState<string>('position');
+  const [cameraView, setCameraView] = useState<string>('top'); // Add cameraView state
 
   useEffect(() => {
     fetch('/updated_beacon_output.txt')
-      .then(response => response.text())
-      .then(text => {
+      .then((response) => response.text())
+      .then((text) => {
         try {
           const parsedMessages = readAndParseBeaconMessages(text);
           setBeaconMessages(parsedMessages);
@@ -28,7 +26,7 @@ function App() {
           }
         }
       })
-      .catch(err => {
+      .catch((err) => {
         if (err instanceof Error) {
           setError('Error loading file: ' + err.message);
         }
@@ -38,7 +36,7 @@ function App() {
   useEffect(() => {
     if (beaconMessages.length > 0) {
       const interval = setInterval(() => {
-        setCurrentMessageIndex(prevIndex => {
+        setCurrentMessageIndex((prevIndex) => {
           if (prevIndex < beaconMessages.length - 1) {
             return prevIndex + 1;
           } else {
@@ -66,11 +64,21 @@ function App() {
             <button onClick={() => setDataView('acceleration')}>Acceleration</button>
           </div>
 
-          <div style={{ position: 'absolute', top: 30, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
-            
+          <div
+            style={{
+              position: 'absolute',
+              top: 30,
+              left: 400,
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              padding: '10px',
+              borderRadius: '5px',
+            }}
+          >
             {dataView === 'position' && (
               <>
-                <p><strong>Beacon Position:</strong></p>
+                <p>
+                  <strong>Beacon Position:</strong>
+                </p>
                 <p>Latitude: {beaconMessages[currentMessageIndex].position.latitude}</p>
                 <p>Longitude: {beaconMessages[currentMessageIndex].position.longitude}</p>
                 <p>Altitude: {beaconMessages[currentMessageIndex].position.altitude}</p>
@@ -79,7 +87,9 @@ function App() {
 
             {dataView === 'orientation' && (
               <>
-                <p><strong>Beacon Orientation:</strong></p>
+                <p>
+                  <strong>Beacon Orientation:</strong>
+                </p>
                 <p>Yaw: {beaconMessages[currentMessageIndex].rotation.yaw}</p>
                 <p>Pitch: {beaconMessages[currentMessageIndex].rotation.pitch}</p>
                 <p>Roll: {beaconMessages[currentMessageIndex].rotation.roll}</p>
@@ -88,15 +98,15 @@ function App() {
 
             {dataView === 'acceleration' && (
               <>
-                <p><strong>Beacon Gyroscopic Acceleration:</strong></p>
+                <p>
+                  <strong>Beacon Gyroscopic Acceleration:</strong>
+                </p>
                 <p>Yaw: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.yaw}</p>
                 <p>Pitch: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.pitch}</p>
                 <p>Roll: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.roll}</p>
               </>
             )}
           </div>
-
-          
 
           <ThreeScene
             beaconMessages={[
@@ -119,11 +129,18 @@ function App() {
               },
             ]}
             dataView={dataView} // Pass the selected data view to the ThreeScene component
+            cameraView={cameraView} // Pass the selected camera view to the ThreeScene component
           />
+
+          <div>
+            <button onClick={() => setCameraView('top')}>Top</button>
+            <button onClick={() => setCameraView('side')}>Side</button>
+            <button onClick={() => setCameraView('bottom')}>Bottom</button>
+          </div>
+
+          <Orbit />
         </>
       ) : null}
-
-      <Orbit />
     </div>
   );
 }
