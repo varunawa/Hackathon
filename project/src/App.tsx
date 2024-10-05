@@ -1,7 +1,10 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import { BeaconMessage, readAndParseBeaconMessages } from './utils/parsing';
-
+import './App.css'
+import Orbit from './components/orbit.js'
+// import ThreeScene from './components/testScene'
+// import BeaconParser from './components/BeaconParser'
 
 function App() {
   // Store the parsed beacon messages and errors
@@ -31,6 +34,7 @@ function App() {
   }, []);
 
   return (
+
     <div className="App">
       <h1>Parsed Beacon Messages</h1>
 
