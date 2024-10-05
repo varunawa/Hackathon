@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import earthTexture from '../assets/earth.jpg';
-//import starsTexture from '../assets/stars.jpg';
+import starsTexture from '../assets/stars.jpg';
 import beaconTexture from '../assets/beacon.jpg';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import satellite from "../assets/satellite.fbx";
+// import satellite from "../assets/satellite.fbx";
 
 import earthMap from '../assets/00_earthmap1k.jpg';
 import earthBump from '../assets/01_earthbump1k.jpg';
@@ -16,7 +16,7 @@ import earthCloudTrans from '../assets/05_earthcloudmaptrans.jpg';
 import getStarfield from './getStarfield';
 
 
-const Orbit: React.FC = () => {
+const Orbit = () => {
 
   useEffect(() => {
     const w = window.innerWidth;
@@ -56,15 +56,15 @@ const Orbit: React.FC = () => {
     // ]);
 
     // Load stars background texture for the scene
-    const cubeTextureLoader = new THREE.CubeTextureLoader();
-    scene.background = cubeTextureLoader.load([
-      starsTexture,
-      starsTexture,
-      starsTexture,
-      starsTexture,
-      starsTexture,
-      starsTexture,
-    ]);
+    // const cubeTextureLoader = new THREE.CubeTextureLoader();
+    // scene.background = cubeTextureLoader.load([
+    //   starsTexture,
+    //   starsTexture,
+    //   starsTexture,
+    //   starsTexture,
+    //   starsTexture,
+    //   starsTexture,
+    // ]);
     
     const stars = getStarfield({ numStars: 2000 });
     scene.add(stars);
@@ -89,22 +89,22 @@ const Orbit: React.FC = () => {
     beacon.position.set(20, 0, 0); // Position the beacon
 
     // Load the FBX model
-    const loader = new FBXLoader();
-    loader.load(
-      satellite,
-      (object) => {
-        // Set model position and scale here
-        object.position.set(0, 0, 0);
-        object.scale.set(0.5, 0.5, 0.5); // Adjust scale as necessary
-        scene.add(object);
-      },
-      (xhr) => {
-        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-      },
-      (error) => {
-        console.error('An error occurred while loading the FBX model:', error);
-      }
-    );
+    // const loader = new FBXLoader();
+    // loader.load(
+    //   satellite,
+    //   (object) => {
+    //     // Set model position and scale here
+    //     object.position.set(0, 0, 0);
+    //     object.scale.set(0.5, 0.5, 0.5); // Adjust scale as necessary
+    //     scene.add(object);
+    //   },
+    //   (xhr) => {
+    //     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    //   },
+    //   (error) => {
+    //     console.error('An error occurred while loading the FBX model:', error);
+    //   }
+    // );
 
     // Animation loop
     const animate = () => {
