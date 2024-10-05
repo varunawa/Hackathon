@@ -56,11 +56,42 @@ function App() {
 
       {beaconMessages.length > 0 ? (
         <>
-          <div style={{ position: 'absolute', top: 10, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
-            <p><strong>Beacon Position:</strong></p>
-            <p>Latitude: {beaconMessages[currentMessageIndex].position.latitude}</p>
-            <p>Longitude: {beaconMessages[currentMessageIndex].position.longitude}</p>
-            <p>Altitude: {beaconMessages[currentMessageIndex].position.altitude}</p>
+          <div
+            style={{
+              position: 'absolute',
+              top: 10,
+              left: 400,
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              padding: '10px',
+              borderRadius: '5px',
+            }}
+          >
+            {dataView === 'position' && (
+              <>
+                <p><strong>Beacon Position:</strong></p>
+                <p>Latitude: {beaconMessages[currentMessageIndex].position.latitude}</p>
+                <p>Longitude: {beaconMessages[currentMessageIndex].position.longitude}</p>
+                <p>Altitude: {beaconMessages[currentMessageIndex].position.altitude}</p>
+              </>
+            )}
+
+            {dataView === 'orientation' && (
+              <>
+                <p><strong>Beacon Orientation:</strong></p>
+                <p>Yaw: {beaconMessages[currentMessageIndex].rotation.yaw}</p>
+                <p>Pitch: {beaconMessages[currentMessageIndex].rotation.pitch}</p>
+                <p>Roll: {beaconMessages[currentMessageIndex].rotation.roll}</p>
+              </>
+            )}
+
+            {dataView === 'acceleration' && (
+              <>
+                <p><strong>Beacon Acceleration:</strong></p>
+                <p>Acceleration X: {beaconMessages[currentMessageIndex].acceleration.x}</p>
+                <p>Acceleration Y: {beaconMessages[currentMessageIndex].acceleration.y}</p>
+                <p>Acceleration Z: {beaconMessages[currentMessageIndex].acceleration.z}</p>
+              </>
+            )}
           </div>
 
           <div>
