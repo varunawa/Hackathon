@@ -5,11 +5,15 @@ import BeaconParser from './components/BeaconParser';
 
 function App() {
   return (
+    <div className="App">
+      <BeaconParser />
+      <ThreeScene />
+    </div>
+    /*
     <>
         <ThreeScene></ThreeScene>
-        <BeaconParser />
-        <ThreeScene />
     </>
+    */
   )
 }
 
