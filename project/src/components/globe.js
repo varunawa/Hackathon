@@ -3,6 +3,13 @@ import React, { useEffect } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import earthTexture from '../assets/earth.jpg'; 
+import earthMap from '../assets/00_earthmap1k.jpg';
+import earthBump from '../assets/01_earthbump1k.jpg';
+import earthSpec from '../assets/02_earthspec1k.jpg';
+import earthLights from '../assets/03_earthlights1k.jpg';
+import earthCloud from '../assets/04_earthcloudmap.jpg';
+import earthCloudTrans from '../assets/05_earthcloudmaptrans.jpg';
+
 
 const Globe = () => {
   useEffect(() => {
@@ -23,15 +30,22 @@ const Globe = () => {
     renderer.setSize(w, h);
     document.body.appendChild(renderer.domElement);
 
+    const earthGroup = new THREE.Group()
+    earthGroup.rotation.z = -23.4 * Math.PI / 180;
+    scene.add(earthGroup);
+
     const controls = new OrbitControls(camera, renderer.domElement);
 
     // Add lighting
-    const ambientLight = new THREE.AmbientLight(0x404040, 1); // Soft white light
-    scene.add(ambientLight);
+    // const ambientLight = new THREE.AmbientLight(0x404040, 1); // Soft white light
+    // scene.add(ambientLight); 
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
+    scene.add(hemiLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 3); // White directional light
-    directionalLight.position.set(5, 5, 5).normalize(); // Position light
-    scene.add(directionalLight);
+
+    // const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
+    // sunLight.position.set(-2, 0.5, 1.5);
+    // scene.add(sunLight);
 
 
     // Create a box geometry as the "earth"
@@ -40,14 +54,14 @@ const Globe = () => {
     const material = new THREE.MeshStandardMaterial({
         // color: 0xffff00,
         // flatShading: true,
-        map: loader.load(earthTexture),
+        map: loader.load(earthMap),
     });
     const earthMesh = new THREE.Mesh(geometry, material);
-    scene.add(earthMesh);
+    earthGroup.add(earthMesh);
 
     // Animation loop
     const animate = () => {
-      earthMesh.rotation.x += 0.001;
+
       earthMesh.rotation.y += 0.001;
       controls.update(); // Only required if controls.enableDamping or controls.autoRotate are set to true
       renderer.render(scene, camera);
