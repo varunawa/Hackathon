@@ -30,25 +30,6 @@ function App() {
   }, []);
   return (
     <div className="App">
-      <h1>Parsed Beacon Messages</h1>
-
-      {error && <p style={{ color: 'red' }}>{error}</p>}.
-      
-      {setBeaconMessages.length > 0 ? (
-        <ul>
-          {setBeaconMessages.map((msg: BeaconMessage, index: Key | null | undefined) => (
-            <li key={index}>
-              <h2>Message ID: {msg.id}</h2>
-              <p><strong>Position:</strong> Latitude {msg.position.latitude}, Longitude {msg.position.longitude}, Altitude {msg.position.altitude}</p>
-              <p><strong>Rotation:</strong> Yaw {msg.rotation.yaw}, Pitch {msg.rotation.pitch}, Roll {msg.rotation.roll}</p>
-              <p><strong>Gyroscopic Acceleration:</strong> Yaw {msg.gyroscopicAcceleration.yaw}, Pitch {msg.gyroscopicAcceleration.pitch}, Roll {msg.gyroscopicAcceleration.roll}</p>
-              <p><strong>Timestamp:</strong> {msg.timestamp}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        !Error && <p>Loading...</p>
-      )}
       <ThreeScene />
     </div>
 
