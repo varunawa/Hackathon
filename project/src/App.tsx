@@ -87,10 +87,10 @@ function App() {
 
             {dataView === 'acceleration' && (
               <>
-                <p><strong>Beacon Acceleration:</strong></p>
-                <p>Acceleration X: {beaconMessages[currentMessageIndex].acceleration.x}</p>
-                <p>Acceleration Y: {beaconMessages[currentMessageIndex].acceleration.y}</p>
-                <p>Acceleration Z: {beaconMessages[currentMessageIndex].acceleration.z}</p>
+                <p><strong>Beacon Gyroscopic Acceleration:</strong></p>
+                <p>Yaw: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.yaw}</p>
+                <p>Pitch: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.pitch}</p>
+                <p>Roll: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.roll}</p>
               </>
             )}
           </div>
