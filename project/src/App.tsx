@@ -63,17 +63,8 @@ function App() {
             <button onClick={() => setDataView('acceleration')}>Acceleration</button>
           </div>
 
-          <div
-              style={{
-              position: 'absolute',
-              top: 10,
-              left: '10%',
-              backgroundColor: 'rgba(255, 255, 255, 0.8)',
-              padding: '10px',
-              borderRadius: '5px',
-              width: '250px',  // Make the box consistent in size
-            }}
-          >
+          <div style={{ position: 'absolute', top: 10, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
+            
             {dataView === 'position' && (
               <>
                 <p><strong>Beacon Position:</strong></p>
