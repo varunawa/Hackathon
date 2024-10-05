@@ -1,6 +1,5 @@
-import React from 'react';
-import './App.css'
-import ThreeScene from './components/testScene'
+import './App.css';
+import ThreeScene from './components/testScene';
 import BeaconParser from './components/BeaconParser';
 
 function App() {
@@ -9,12 +8,13 @@ function App() {
       <BeaconParser />
       <ThreeScene />
     </div>
+
     /*
     <>
         <ThreeScene></ThreeScene>
     </>
     */
-  )
+  );
 }
 
-export default App
+export default App;

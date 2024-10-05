@@ -1,6 +1,3 @@
-// src/utils/parsing.ts
-
-// Define the BeaconMessage interface
 export interface BeaconMessage {
   id: string;
   position: { latitude: number; longitude: number; altitude: number };
@@ -15,7 +12,7 @@ export function parseBeaconMessage(message: string): BeaconMessage {
   const messageRegex = /Message (\d+).*L\[(\-?\d+\.\d+),(\-?\d+\.\d+),(\-?\d+\.\d+)\].*R\[(\-?\d+\.\d+),(\-?\d+\.\d+),(\-?\d+\.\d+)\].*G\[(\-?\d+\.\d+),(\-?\d+\.\d+),(\-?\d+\.\d+)\].*RD\[(.*?)\]/;
   const match = message.match(messageRegex);
 
-  if (!match) throw new Error("Invalid message format");
+  if (!match) throw new Error("Invalid message format: " + message);
 
   const [
       _,
@@ -38,15 +35,13 @@ export function parseBeaconMessage(message: string): BeaconMessage {
       position: { latitude: parseFloat(latitude), longitude: parseFloat(longitude), altitude: parseFloat(altitude) },
       rotation: { yaw: parseFloat(yaw), pitch: parseFloat(pitch), roll: parseFloat(roll) },
       gyroscopicAcceleration: { yaw: parseFloat(gyroYaw), pitch: parseFloat(gyroPitch), roll: parseFloat(gyroRoll) },
-      timestamp
+      timestamp,
   };
 }
 
 // Function to parse all beacon messages from a string
 export function readAndParseBeaconMessages(data: string): BeaconMessage[] {
-  // Define a delimiter based on your file's structure
-  // From your example, messages are separated by a series of underscores
-  // We'll split based on "Message <number>" using a positive lookahead
+  // Split the messages using a regex that accounts for the message structure
   const rawMessages = data.split(/(?=Message \d+)/).filter(msg => msg.trim() !== '');
 
   // Parse each message
