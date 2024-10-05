@@ -1,9 +1,21 @@
 export interface BeaconMessage {
   id: string;
-  position: { latitude: number; longitude: number; altitude: number };
-  rotation: { yaw: number; pitch: number; roll: number };
-  gyroscopicAcceleration: { yaw: number; pitch: number; roll: number };
   timestamp: string;
+  position: {
+    latitude: number;
+    longitude: number;
+    altitude: number;
+  };
+  rotation: {
+    yaw: number;
+    pitch: number;
+    roll: number;
+  };
+  gyroscopicAcceleration: {
+    yaw: number;
+    pitch: number;
+    roll: number;
+  };
 }
 
 // Parsing function

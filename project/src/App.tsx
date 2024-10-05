@@ -5,9 +5,8 @@ import './App.css'
 import ThreeScene from './components/testScene'
 // import BeaconParser from './components/BeaconParser'
 // @ts-ignore
-import Orbit from './components/orbit.js'
-
-
+import Orbit from './components/orbit.js';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   const [beaconMessages, setBeaconMessages] = useState<BeaconMessage[]>([]);
@@ -46,22 +45,24 @@ function App() {
             return prevIndex;
           }
         });
-      }, 2000);
+      }, 1000);
 
       return () => clearInterval(interval);
     }
   }, [beaconMessages]);
-
+  const currentData = beaconMessages[currentMessageIndex];
+  console.log('Current Data:', currentData);
+  // console.log(currentData.position);
   return (
     <div className="App">
       <h1>Beacon 3D Visualisation</h1>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      {beaconMessages.length > 0 ? (
+      {beaconMessages.length > 0 && currentData ? (
         <>
           <div
-              style={{
+            style={{
               position: 'absolute',
               top: 10,
               left: '10%',
@@ -105,32 +106,20 @@ function App() {
             <button onClick={() => setDataView('acceleration')}>Acceleration</button>
           </div>
 
-          <ThreeScene
-            beaconMessages={[
-              {
-                position: [
-                  beaconMessages[currentMessageIndex].position.latitude,
-                  beaconMessages[currentMessageIndex].position.longitude,
-                  beaconMessages[currentMessageIndex].position.altitude,
-                ],
-                rotation: [
-                  beaconMessages[currentMessageIndex].rotation.yaw,
-                  beaconMessages[currentMessageIndex].rotation.pitch,
-                  beaconMessages[currentMessageIndex].rotation.roll,
-                ],
-                acceleration: [
-                  beaconMessages[currentMessageIndex].gyroscopicAcceleration.yaw,
-                  beaconMessages[currentMessageIndex].gyroscopicAcceleration.pitch,
-                  beaconMessages[currentMessageIndex].gyroscopicAcceleration.roll,
-                ],
-              },
-            ]}
-            dataView={dataView} // Pass the selected data view to the ThreeScene component
-          />
+          <ErrorBoundary>
+            <Orbit
+              currentCoordinates={currentData.position}
+              rotation={currentData.rotation}
+              acceleration={currentData.gyroscopicAcceleration}
+              dataView={dataView}
+            />
+          </ErrorBoundary>
         </>
-      ) : null}
+      ) : (
+        <p>Loading data...</p>
+      )}
 
-      <Orbit />
+      {/* <Orbit /> */}
     </div>
   );
 }
