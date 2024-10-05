@@ -4,9 +4,14 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import earthTexture from '../assets/earth.jpg';
 import starsTexture from '../assets/stars.jpg';
 import beaconTexture from '../assets/beacon.jpg';
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+import satellite from "../assets/satellite.fbx";
 
 const Orbit = () => {
+
   useEffect(() => {
+
+
     const w = window.innerWidth;
     const h = window.innerHeight;
 
@@ -60,10 +65,27 @@ const Orbit = () => {
     earth.add(beacon); // Add beacon as a child of the earth mesh
     beacon.position.set(20, 0, 0); // Position the beacon
 
+    const loader = new FBXLoader();
+
+    loader.load(
+        satellite,
+        (object) => {
+            scene.add(object);
+            object.position.set(0,0,0);
+            object.scale.set(1, 1, 1);
+        },
+        (xhr) => {
+            console.log(xhr.loaded / xhr.total * 100) + '% loaded');
+        },
+
+    )
+
+
+
     // Animation loop
     const animate = () => {
       earth.rotateY(0.004); // Rotate earth
-      orbit.update(); // Update controls
+      Orbit.update(); // Update controls
       renderer.render(scene, camera);
     };
 
