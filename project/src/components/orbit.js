@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 
 import earthTexture from '../assets/earth.jpg';
 import starsTexture from '../assets/stars.jpg';
@@ -17,7 +17,7 @@ const camera = new THREE.PerspectiveCamera(
     1000
 );
 
-// Corrected `domElement` typo
+
 const orbit = new OrbitControls(camera, renderer.domElement);
 camera.position.set(-90, 140, 140);
 orbit.update();
@@ -59,3 +59,4 @@ window.addEventListener('resize', function() {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
