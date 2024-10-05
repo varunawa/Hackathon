@@ -9,7 +9,7 @@ import earthSpec from '../assets/02_earthspec1k.jpg';
 import earthLights from '../assets/03_earthlights1k.jpg';
 import earthCloud from '../assets/04_earthcloudmap.jpg';
 import earthCloudTrans from '../assets/05_earthcloudmaptrans.jpg';
-
+import getStarfield from './getStarfield';
 
 const Globe = () => {
   useEffect(() => {
@@ -36,17 +36,13 @@ const Globe = () => {
 
     const controls = new OrbitControls(camera, renderer.domElement);
 
-    // Add lighting
-    // const ambientLight = new THREE.AmbientLight(0x404040, 1); // Soft white light
-    // scene.add(ambientLight); 
-    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
-    scene.add(hemiLight);
 
-
-    // const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    // sunLight.position.set(-2, 0.5, 1.5);
-    // scene.add(sunLight);
-
+    const stars = getStarfield({numStars: 2000});
+    scene.add(stars);
+   
+    const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
+    sunLight.position.set(-2, 0.5, 1.5);
+    scene.add(sunLight);
 
     // Create a box geometry as the "earth"
     const loader = new THREE.TextureLoader();
@@ -59,10 +55,18 @@ const Globe = () => {
     const earthMesh = new THREE.Mesh(geometry, material);
     earthGroup.add(earthMesh);
 
+    // Add a mesh for lights (Optional)
+    const lightsMat = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+      });
+      const lightsMesh = new THREE.Mesh(geometry, lightsMat);
+      earthGroup.add(lightsMesh);
+
+
     // Animation loop
     const animate = () => {
 
-      earthMesh.rotation.y += 0.001;
+      earthMesh.rotation.y += 0.002;
       controls.update(); // Only required if controls.enableDamping or controls.autoRotate are set to true
       renderer.render(scene, camera);
     };
