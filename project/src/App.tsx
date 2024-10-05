@@ -61,12 +61,42 @@ function App() {
       
       {beaconMessages.length > 0 ? (
         <>
-          <div style={{ position: 'absolute', top: 10, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
-            <p><strong>Beacon Position:</strong></p>
-            <p>Latitude: {beaconMessages[currentMessageIndex].position.latitude}</p>
-            <p>Longitude: {beaconMessages[currentMessageIndex].position.longitude}</p>
-            <p>Altitude: {beaconMessages[currentMessageIndex].position.altitude}</p>
-          </div>
+          <div style={{
+            position: 'absolute',
+            top: 10,
+            right: 10,  // Changed to right
+            backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+            padding: '10px',
+            borderRadius: '5px',
+            width: '250px',
+          }}>
+          {dataView === 'position' && (
+            <>
+              <p><strong>Beacon Position:</strong></p>
+              <p>Latitude: {beaconMessages[currentMessageIndex].position.latitude}</p>
+              <p>Longitude: {beaconMessages[currentMessageIndex].position.longitude}</p>
+              <p>Altitude: {beaconMessages[currentMessageIndex].position.altitude}</p>
+            </>
+          )}
+          
+          {dataView === 'orientation' && (
+            <>
+              <p><strong>Beacon Orientation:</strong></p>
+              <p>Yaw: {beaconMessages[currentMessageIndex].rotation.yaw}</p>
+              <p>Pitch: {beaconMessages[currentMessageIndex].rotation.pitch}</p>
+              <p>Roll: {beaconMessages[currentMessageIndex].rotation.roll}</p>
+            </>
+          )}
+
+          {dataView === 'acceleration' && (
+            <>
+              <p><strong>Beacon Acceleration:</strong></p>
+              <p>Acceleration Yaw: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.yaw}</p>
+              <p>Acceleration Pitch: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.pitch}</p>
+              <p>Acceleration Roll: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.roll}</p>
+            </>
+          )}
+        </div>
 
           <div>
             <button onClick={() => setDataView('position')}>Position</button>
@@ -91,8 +121,14 @@ function App() {
                   beaconMessages[currentMessageIndex].rotation.pitch,
                   beaconMessages[currentMessageIndex].rotation.roll,
                 ],
+                acceleration: [
+                  beaconMessages[currentMessageIndex].gyroscopicAcceleration.yaw,
+                  beaconMessages[currentMessageIndex].gyroscopicAcceleration.pitch,
+                  beaconMessages[currentMessageIndex].gyroscopicAcceleration.roll,
+                ],
               },
             ]}
+            dataView={dataView} // Pass the selected data view to the ThreeScene component
           />
         </>
       ) : null}
