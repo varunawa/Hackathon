@@ -6,19 +6,21 @@ This project is a 3D visualization tool for beacon data using React, TypeScript,
 ## **List of Libraries and Dependencies**
 
 1. **React**  
-   Used in almost every file that involves JSX or React hooks. The core library used for building the front-end and managing the user interface in a component-based structure.  
+   Used in almost every file that involves JSX or React hooks. The core library used for building the front-end and managing the user interface 
+   in a component-based structure.
    **Purpose:** Handles rendering, state management, and user interactions.
 
 2. **TypeScript**  
-   The presence of TypeScript is implied in files like `parsing.ts` and `App.tsx`, adding static typing to the JavaScript code. TypeScript is providing type safety and enhancing code quality across these files.
+   The presence of TypeScript is implied in files like `parsing.ts` and `App.tsx`, adding static typing to the JavaScript code. TypeScript is 
+   providing type safety and enhancing code quality across these files.
    **Purpose:** Provides static types for the project, making development smoother and safer.
 
 3. **Three.js**  
-   Three.js is used throughout the project, particularly in 3D rendering and object manipulation.  
+   Three.js is used throughout the project, particularly in 3D rendering and object manipulation.
    **Purpose:** Renders 3D objects like the cube, Earth, and stars in the scene.
 
 4. **FBXLoader**  
-   FBXLoader is used in `orbit.js` to load 3D models in FBX format, particularly the satellite model  
+   FBXLoader is used in `orbit.js` to load 3D models in FBX format, particularly the satellite model
    **Purpose:** Allows us to load 3D models into the scene (e.g., satellite models in this project).
 
 5. **OrbitControls**  
@@ -26,7 +28,7 @@ This project is a 3D visualization tool for beacon data using React, TypeScript,
    **Purpose:** OrbitControls is used in both `orbit.js` and `globe.js`. It enables users to zoom and rotate the camera around objects.
 
 6. **ShaderMaterial**  
-   ShaderMaterial is used in `getFresnelMat.js` to create a custom Fresnel effect, which adds glowing outlines around 3D objects. 
+   ShaderMaterial is used in `getFresnelMat.js` to create a custom Fresnel effect, which adds glowing outlines around 3D objects.
    **Purpose:** Implements the Fresnel material effect for glowing outlines on 3D objects.
 
 ---
