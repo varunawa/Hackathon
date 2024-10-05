@@ -10,6 +10,7 @@ function App() {
   // Store the parsed beacon messages and errors
   const [beaconMessages, setBeaconMessages] = useState<BeaconMessage[]>([]);  // State to hold the parsed messages
   const [error, setError] = useState<string | null>(null);  // State to hold error messages
+  const [currentMessageIndex, setCurrentMessageIndex] = useState<number>(0); 
 
   useEffect(() => {
     // Fetch the raw data from the text file in the public folder
@@ -33,6 +34,24 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    if (beaconMessages.length > 0) {
+      // Simulate real-time message arrival
+      const interval = setInterval(() => {
+        setCurrentMessageIndex(prevIndex => {
+          if (prevIndex < beaconMessages.length - 1) {
+            return prevIndex + 1;  // Move to the next message
+          } else {
+            clearInterval(interval);  // Stop the interval when all messages are shown
+            return prevIndex;
+          }
+        });
+      }, 1000);  // Update every 1 second
+
+      return () => clearInterval(interval);  // Clean up the interval on unmount
+    }
+  }, [beaconMessages]);
+
   return (
 
     <div className="App">
@@ -40,27 +59,25 @@ function App() {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
       
-      {/* {beaconMessages.length > 0 ? (
-        <ul>
-          {beaconMessages.map((msg, index) => (
-            <li key={index}>
-              <h2>Message ID: {msg.id}</h2>
-              <p><strong>Position:</strong> Latitude {msg.position.latitude}, Longitude {msg.position.longitude}, Altitude {msg.position.altitude}</p>
-              <p><strong>Rotation:</strong> Yaw {msg.rotation.yaw}, Pitch {msg.rotation.pitch}, Roll {msg.rotation.roll}</p>
-              <p><strong>Gyroscopic Acceleration:</strong> Yaw {msg.gyroscopicAcceleration.yaw}, Pitch {msg.gyroscopicAcceleration.pitch}, Roll {msg.gyroscopicAcceleration.roll}</p>
-              <p><strong>Timestamp:</strong> {msg.timestamp}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        !Error && <p>Loading...</p>
-      )} */}
-      <ThreeScene
-        beaconMessages={beaconMessages.map(msg => ({
-          position: [msg.position.latitude, msg.position.longitude, msg.position.altitude],
-          rotation: [msg.rotation.yaw, msg.rotation.pitch, msg.rotation.roll],
-        }))}
-      />
+      {beaconMessages.length > 0 ? (
+        <ThreeScene
+          beaconMessages={[
+            {
+              position: [
+                beaconMessages[currentMessageIndex].position.latitude,
+                beaconMessages[currentMessageIndex].position.longitude,
+                beaconMessages[currentMessageIndex].position.altitude,
+              ],
+              rotation: [
+                beaconMessages[currentMessageIndex].rotation.yaw,
+                beaconMessages[currentMessageIndex].rotation.pitch,
+                beaconMessages[currentMessageIndex].rotation.roll,
+              ],
+            },
+          ]}
+        />
+      ) : null}
+
     </div>
   );
 
@@ -70,3 +87,7 @@ function App() {
 }
 
 export default App;
+
+function setCurrentMessageIndex(arg0: (prevIndex: any) => any) {
+  throw new Error('Function not implemented.');
+}
