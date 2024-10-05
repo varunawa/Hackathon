@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { BeaconMessage, readAndParseBeaconMessages } from './utils/parsing';
 import './App.css'
 import Orbit from './components/orbit.js'
-// import ThreeScene from './components/testScene'
+import ThreeScene from './components/testScene'
 // import BeaconParser from './components/BeaconParser'
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
       
-      {beaconMessages.length > 0 ? (
+      {/* {beaconMessages.length > 0 ? (
         <ul>
           {beaconMessages.map((msg, index) => (
             <li key={index}>
@@ -54,7 +54,13 @@ function App() {
         </ul>
       ) : (
         !Error && <p>Loading...</p>
-      )}
+      )} */}
+      <ThreeScene
+        beaconMessages={beaconMessages.map(msg => ({
+          position: [msg.position.latitude, msg.position.longitude, msg.position.altitude],
+          rotation: [msg.rotation.yaw, msg.rotation.pitch, msg.rotation.roll],
+        }))}
+      />
     </div>
   );
 
