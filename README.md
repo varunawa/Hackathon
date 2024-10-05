@@ -1,4 +1,4 @@
-List of libraries and dependencies:
+*List of libraries and dependencies:*
 React: The core library used for building the front-end and managing the user interface in a component-based structure.
 Purpose: Handles rendering, state management, and user interactions.
 
