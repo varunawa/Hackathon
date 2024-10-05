@@ -8,10 +8,9 @@ import ThreeScene from './components/testScene'
 
 function App() {
   // Store the parsed beacon messages and errors
-  const [beaconMessages, setBeaconMessages] = useState<BeaconMessage[]>([]);  // State to hold the parsed messages
-  const [error, setError] = useState<string | null>(null);  // State to hold error messages
-  const [currentMessageIndex, setCurrentMessageIndex] = useState<number>(0); 
-  const [dataView, setDataView] = useState<'position' | 'orientation' | 'acceleration'>('position');
+  const [beaconMessages, setBeaconMessages] = useState<BeaconMessage[]>([]); // State to hold the parsed messages
+  const [error, setError] = useState<string | null>(null); // State to hold error messages
+  const [currentMessageIndex, setCurrentMessageIndex] = useState<number>(0);
 
   useEffect(() => {
     // Fetch the raw data from the text file in the public folder
@@ -21,7 +20,7 @@ function App() {
         try {
           // Parse the raw text data into beacon messages
           const parsedMessages = readAndParseBeaconMessages(text);
-          setBeaconMessages(parsedMessages);  // Store parsed messages in state
+          setBeaconMessages(parsedMessages); // Store parsed messages in state
         } catch (err) {
           if (err instanceof Error) {
             setError('Error parsing beacon data: ' + err.message);
@@ -35,21 +34,22 @@ function App() {
       });
   }, []);
 
+  // Effect to iterate through beacon positions with a delay
   useEffect(() => {
     if (beaconMessages.length > 0) {
-      // Simulate real-time message arrival
       const interval = setInterval(() => {
         setCurrentMessageIndex(prevIndex => {
+          // If the last message is reached, stop the interval
           if (prevIndex < beaconMessages.length - 1) {
-            return prevIndex + 1;  // Move to the next message
+            return prevIndex + 1; // Move to the next message
           } else {
-            clearInterval(interval);  // Stop the interval when all messages are shown
-            return prevIndex;
+            clearInterval(interval); // Stop the interval
+            return prevIndex; // Stay at the last message
           }
         });
-      }, 1000);  // Update every 1 second
+      }, 2000); // Delay of 2 seconds (2000 milliseconds)
 
-      return () => clearInterval(interval);  // Clean up the interval on unmount
+      return () => clearInterval(interval); // Clean up the interval on unmount
     }
   }, [beaconMessages]);
 
@@ -63,9 +63,9 @@ function App() {
         <>
           <div style={{ position: 'absolute', top: 10, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
             <p><strong>Beacon Position:</strong></p>
-            <p>Latitude: {beaconMessages[0].position.latitude}</p>
-            <p>Longitude: {beaconMessages[0].position.longitude}</p>
-            <p>Altitude: {beaconMessages[0].position.altitude}</p>
+            <p>Latitude: {beaconMessages[currentMessageIndex].position.latitude}</p>
+            <p>Longitude: {beaconMessages[currentMessageIndex].position.longitude}</p>
+            <p>Altitude: {beaconMessages[currentMessageIndex].position.altitude}</p>
           </div>
 
           <div>
@@ -103,7 +103,3 @@ function App() {
 }
 
 export default App;
-
-function setCurrentMessageIndex(arg0: (prevIndex: any) => any) {
-  throw new Error('Function not implemented.');
-}
