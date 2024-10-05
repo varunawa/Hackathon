@@ -5,9 +5,8 @@ import './App.css'
 import ThreeScene from './components/testScene'
 // import BeaconParser from './components/BeaconParser'
 // @ts-ignore
-import Orbit from './components/orbit.js'
-
-
+import Orbit from './components/orbit.js';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   const [beaconMessages, setBeaconMessages] = useState<BeaconMessage[]>([]);
@@ -46,20 +45,35 @@ function App() {
             return prevIndex;
           }
         });
-      }, 2000);
+      }, 1000);
 
       return () => clearInterval(interval);
     }
   }, [beaconMessages]);
-
+  const currentData = beaconMessages[currentMessageIndex];
+  console.log('Current Data:', currentData);
+  // console.log(currentData.position);
   return (
     <div className="App">
       <h1>Beacon 3D Visualisation</h1>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      {beaconMessages.length > 0 ? (
+      {beaconMessages.length > 0 && currentData ? (
         <>
+
+          <div
+            style={{
+              position: 'absolute',
+              top: 10,
+              left: '10%',
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              padding: '10px',
+              borderRadius: '5px',
+              width: '250px',  // Make the box consistent in size
+            }}
+          >
+
           <div>
             <button onClick={() => setDataView('position')}>Position</button>
             <button onClick={() => setDataView('orientation')}>Orientation</button>
@@ -68,6 +82,7 @@ function App() {
 
           <div style={{ position: 'absolute', top: 30, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
             
+
             {dataView === 'position' && (
               <>
                 <p><strong>Beacon Position:</strong></p>
@@ -98,32 +113,20 @@ function App() {
 
           
 
-          <ThreeScene
-            beaconMessages={[
-              {
-                position: [
-                  beaconMessages[currentMessageIndex].position.latitude,
-                  beaconMessages[currentMessageIndex].position.longitude,
-                  beaconMessages[currentMessageIndex].position.altitude,
-                ],
-                rotation: [
-                  beaconMessages[currentMessageIndex].rotation.yaw,
-                  beaconMessages[currentMessageIndex].rotation.pitch,
-                  beaconMessages[currentMessageIndex].rotation.roll,
-                ],
-                acceleration: [
-                  beaconMessages[currentMessageIndex].gyroscopicAcceleration.yaw,
-                  beaconMessages[currentMessageIndex].gyroscopicAcceleration.pitch,
-                  beaconMessages[currentMessageIndex].gyroscopicAcceleration.roll,
-                ],
-              },
-            ]}
-            dataView={dataView} // Pass the selected data view to the ThreeScene component
-          />
+          <ErrorBoundary>
+            <Orbit
+              currentCoordinates={currentData.position}
+              rotation={currentData.rotation}
+              acceleration={currentData.gyroscopicAcceleration}
+              dataView={dataView}
+            />
+          </ErrorBoundary>
         </>
-      ) : null}
+      ) : (
+        <p>Loading data...</p>
+      )}
 
-      <Orbit />
+      {/* <Orbit /> */}
     </div>
   );
 }
