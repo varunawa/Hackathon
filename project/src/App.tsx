@@ -2,9 +2,12 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { BeaconMessage, readAndParseBeaconMessages } from './utils/parsing';
 import './App.css'
-import Orbit from './components/orbit.js'
 import ThreeScene from './components/testScene'
 // import BeaconParser from './components/BeaconParser'
+// @ts-ignore
+import Orbit from './components/orbit.js'
+
+
 
 function App() {
   const [beaconMessages, setBeaconMessages] = useState<BeaconMessage[]>([]);
