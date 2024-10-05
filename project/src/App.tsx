@@ -5,8 +5,8 @@ import { BeaconMessage, readAndParseBeaconMessages } from './utils/parsing';
 
 function App() {
   // Store the parsed beacon messages and errors
-  const [, setBeaconMessages] = useState<BeaconMessage[]>([]);  // State to hold the parsed messages
-  const [, setError] = useState<string | null>(null);  // State to hold error messages
+  const [beaconMessages, setBeaconMessages] = useState<BeaconMessage[]>([]);  // State to hold the parsed messages
+  const [error, setError] = useState<string | null>(null);  // State to hold error messages
 
   useEffect(() => {
     // Fetch the raw data from the text file in the public folder
@@ -29,6 +29,30 @@ function App() {
         }
       });
   }, []);
+
+  return (
+    <div className="App">
+      <h1>Parsed Beacon Messages</h1>
+
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      
+      {beaconMessages.length > 0 ? (
+        <ul>
+          {beaconMessages.map((msg, index) => (
+            <li key={index}>
+              <h2>Message ID: {msg.id}</h2>
+              <p><strong>Position:</strong> Latitude {msg.position.latitude}, Longitude {msg.position.longitude}, Altitude {msg.position.altitude}</p>
+              <p><strong>Rotation:</strong> Yaw {msg.rotation.yaw}, Pitch {msg.rotation.pitch}, Roll {msg.rotation.roll}</p>
+              <p><strong>Gyroscopic Acceleration:</strong> Yaw {msg.gyroscopicAcceleration.yaw}, Pitch {msg.gyroscopicAcceleration.pitch}, Roll {msg.gyroscopicAcceleration.roll}</p>
+              <p><strong>Timestamp:</strong> {msg.timestamp}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        !Error && <p>Loading...</p>
+      )}
+    </div>
+  );
 
 }
 
