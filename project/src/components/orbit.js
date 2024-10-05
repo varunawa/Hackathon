@@ -56,19 +56,23 @@ const Orbit = ({ currentCoordinates, rotation, acceleration, dataView }) => {
     orbit.enableDamping = true; // Smooth the controls
     orbit.dampingFactor = 0.25; // Set damping factor
 
-    // Add ambient light
+    // Add light
     const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Brighter light
     scene.add(ambientLight);
+
+    const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
+    sunLight.position.set(2, 2, 5); // Position the sun light correctly
+    scene.add(sunLight);
 
     const stars = getStarfield({ numStars: 2000 });
     scene.add(stars);
 
-    // Load earth texture
+
     const textureLoader = new THREE.TextureLoader();
     const earthGeo = new THREE.SphereGeometry(16, 30, 30); // 16 units radius 
     const earthMat = new THREE.MeshStandardMaterial({
       map: textureLoader.load(earthTexture),
-
+      
     });
     const earth = new THREE.Mesh(earthGeo, earthMat);
     scene.add(earth);
