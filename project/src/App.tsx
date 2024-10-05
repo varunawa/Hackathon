@@ -2,9 +2,12 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { BeaconMessage, readAndParseBeaconMessages } from './utils/parsing';
 import './App.css'
-import Orbit from './components/orbit.js'
 import ThreeScene from './components/testScene'
 // import BeaconParser from './components/BeaconParser'
+// @ts-ignore
+import Orbit from './components/orbit.js'
+
+
 
 function App() {
   const [beaconMessages, setBeaconMessages] = useState<BeaconMessage[]>([]);
@@ -63,7 +66,7 @@ function App() {
             <button onClick={() => setDataView('acceleration')}>Acceleration</button>
           </div>
 
-          <div style={{ position: 'absolute', top: 10, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
+          <div style={{ position: 'absolute', top: 30, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
             
             {dataView === 'position' && (
               <>
