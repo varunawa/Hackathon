@@ -66,8 +66,9 @@ const Orbit = ({ currentCoordinates, rotation, acceleration, dataView }) => {
     // Load earth texture
     const textureLoader = new THREE.TextureLoader();
     const earthGeo = new THREE.SphereGeometry(16, 30, 30); // 16 units radius 
-    const earthMat = new THREE.MeshBasicMaterial({
+    const earthMat = new THREE.MeshStandardMaterial({
       map: textureLoader.load(earthTexture),
+
     });
     const earth = new THREE.Mesh(earthGeo, earthMat);
     scene.add(earth);

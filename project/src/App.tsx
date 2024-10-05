@@ -5,7 +5,6 @@ import './App.css'
 // import BeaconParser from './components/BeaconParser'
 // @ts-ignore
 import Orbit from './components/orbit.js';
-import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   const [beaconMessages, setBeaconMessages] = useState<BeaconMessage[]>([]);
@@ -79,17 +78,17 @@ function App() {
           </div>
 
           <div style={{ position: 'absolute', top: 30, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
-            {/* ... existing data view conditionals ... */}
+
           </div>
 
-          <ErrorBoundary>
+
             <Orbit
               currentCoordinates={currentData.position}
               rotation={currentData.rotation}
               acceleration={currentData.gyroscopicAcceleration}
               dataView={dataView}
             />
-          </ErrorBoundary>
+
         </>
       ) : (
         <p>Loading data...</p>
