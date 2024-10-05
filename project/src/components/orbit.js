@@ -4,20 +4,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import earthTexture from '../assets/earth.jpg';
 import starsTexture from '../assets/stars.jpg';
 import beaconTexture from '../assets/beacon.jpg';
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-// import satellite from "../assets/satellite.fbx";
-
-import earthMap from '../assets/00_earthmap1k.jpg';
-import earthBump from '../assets/01_earthbump1k.jpg';
-import earthSpec from '../assets/02_earthspec1k.jpg';
-import earthLights from '../assets/03_earthlights1k.jpg';
-import earthCloud from '../assets/04_earthcloudmap.jpg';
-import earthCloudTrans from '../assets/05_earthcloudmaptrans.jpg';
-import getStarfield from './getStarfield';
-
 
 const Orbit = () => {
-
   useEffect(() => {
     const w = window.innerWidth;
     const h = window.innerHeight;
@@ -30,7 +18,7 @@ const Orbit = () => {
     camera.position.set(0, 0, 100); // Set a good initial position
 
     // Create the WebGL Renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer();
     renderer.setSize(w, h); // Set initial size
     document.body.appendChild(renderer.domElement);
 
@@ -43,32 +31,16 @@ const Orbit = () => {
     const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Brighter light
     scene.add(ambientLight);
 
-
-    // // Load stars background texture for the scene
-    // const cubeTextureLoader = new THREE.CubeTextureLoader();
-    // scene.background = cubeTextureLoader.load([
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    // ]);
-
     // Load stars background texture for the scene
-    // const cubeTextureLoader = new THREE.CubeTextureLoader();
-    // scene.background = cubeTextureLoader.load([
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    //   starsTexture,
-    // ]);
-    
-    const stars = getStarfield({ numStars: 2000 });
-    scene.add(stars);
-
+    const cubeTextureLoader = new THREE.CubeTextureLoader();
+    scene.background = cubeTextureLoader.load([
+      starsTexture,
+      starsTexture,
+      starsTexture,
+      starsTexture,
+      starsTexture,
+      starsTexture,
+    ]);
 
     // Load earth texture
     const textureLoader = new THREE.TextureLoader();
@@ -87,24 +59,6 @@ const Orbit = () => {
     const beacon = new THREE.Mesh(beaconGeo, beaconMat);
     earth.add(beacon); // Add beacon as a child of the earth mesh
     beacon.position.set(20, 0, 0); // Position the beacon
-
-    // Load the FBX model
-    // const loader = new FBXLoader();
-    // loader.load(
-    //   satellite,
-    //   (object) => {
-    //     // Set model position and scale here
-    //     object.position.set(0, 0, 0);
-    //     object.scale.set(0.5, 0.5, 0.5); // Adjust scale as necessary
-    //     scene.add(object);
-    //   },
-    //   (xhr) => {
-    //     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-    //   },
-    //   (error) => {
-    //     console.error('An error occurred while loading the FBX model:', error);
-    //   }
-    // );
 
     // Animation loop
     const animate = () => {
