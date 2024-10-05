@@ -6,35 +6,27 @@ This project is a 3D visualization tool for beacon data using React, TypeScript,
 ## **List of Libraries and Dependencies**
 
 1. **React**  
-   The core library used for building the front-end and managing the user interface in a component-based structure.  
+   Used in almost every file that involves JSX or React hooks. The core library used for building the front-end and managing the user interface in a component-based structure.  
    **Purpose:** Handles rendering, state management, and user interactions.
 
 2. **TypeScript**  
-   A superset of JavaScript that adds static typing to enhance code readability, maintainability, and error checking.  
+   The presence of TypeScript is implied in files like `parsing.ts` and `App.tsx`, adding static typing to the JavaScript code. TypeScript is providing type safety and enhancing code quality across these files.
    **Purpose:** Provides static types for the project, making development smoother and safer.
 
 3. **Three.js**  
-   A JavaScript library used to create and display animated 3D computer graphics in the web browser.  
+   Three.js is used throughout the project, particularly in 3D rendering and object manipulation.  
    **Purpose:** Renders 3D objects like the cube, Earth, and stars in the scene.
 
-4. **React Three Fiber**  
-   A React renderer for Three.js, allowing for easier integration of Three.js with React components.  
-   **Purpose:** Simplifies the creation of 3D visualizations within the React framework.
-
-5. **@react-three/drei**  
-   A set of helper utilities for Three.js, including useful components like OrbitControls.  
-   **Purpose:** Provides helper utilities such as controls for rotating and zooming the 3D scene.
-
-6. **FBXLoader**  
-   A loader for handling FBX model files in Three.js.  
+4. **FBXLoader**  
+   FBXLoader is used in `orbit.js` to load 3D models in FBX format, particularly the satellite model  
    **Purpose:** Allows us to load 3D models into the scene (e.g., satellite models in this project).
 
-7. **OrbitControls**  
+5. **OrbitControls**  
    A module from Three.js for controlling the 3D camera view with zoom and rotation functionality.  
-   **Purpose:** Allows the user to rotate and zoom in/out of the 3D visualization.
+   **Purpose:** OrbitControls is used in both `orbit.js` and `globe.js`. It enables users to zoom and rotate the camera around objects.
 
-8. **ShaderMaterial**  
-   A Three.js material that allows for custom shaders.  
+6. **ShaderMaterial**  
+   ShaderMaterial is used in `getFresnelMat.js` to create a custom Fresnel effect, which adds glowing outlines around 3D objects. 
    **Purpose:** Implements the Fresnel material effect for glowing outlines on 3D objects.
 
 ---
