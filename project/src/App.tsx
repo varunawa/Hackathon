@@ -58,13 +58,14 @@ function App() {
       {beaconMessages.length > 0 ? (
         <>
           <div
-            style={{
+              style={{
               position: 'absolute',
               top: 10,
-              left: 400,
+              left: '10%',
               backgroundColor: 'rgba(255, 255, 255, 0.8)',
               padding: '10px',
               borderRadius: '5px',
+              width: '250px',  // Make the box consistent in size
             }}
           >
             {dataView === 'position' && (
