@@ -60,7 +60,7 @@ function App() {
       
       {beaconMessages.length > 0 ? (
         <>
-          <div style={{ position: 'absolute', top: 10, left: 10, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
+          <div style={{ position: 'absolute', top: 10, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
             <p><strong>Beacon Position:</strong></p>
             <p>Latitude: {beaconMessages[0].position.latitude}</p>
             <p>Longitude: {beaconMessages[0].position.longitude}</p>
