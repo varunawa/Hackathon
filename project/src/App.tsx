@@ -1,7 +1,6 @@
 import './App.css'
 import { useEffect, useState } from 'react'
 import ThreeScene from './components/testScene'
-import BeaconParser from './components/BeaconParser'
 import { BeaconMessage, readAndParseBeaconMessages } from './utils/parsing';
 
 function App() {
