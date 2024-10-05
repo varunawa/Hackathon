@@ -54,7 +54,7 @@ function App() {
   return (
     <div className="App">
       <h1>Beacon 3D Visualisation</h1>
-
+      <p>by four people</p>
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {beaconMessages.length > 0 && currentData ? (
