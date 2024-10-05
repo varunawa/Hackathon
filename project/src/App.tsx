@@ -53,36 +53,41 @@ function App() {
   }, [beaconMessages]);
 
   return (
-
     <div className="App">
       <h1>Beacon 3D Visualisation</h1>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
       
       {beaconMessages.length > 0 ? (
-        <ThreeScene
-          beaconMessages={[
-            {
-              position: [
-                beaconMessages[currentMessageIndex].position.latitude,
-                beaconMessages[currentMessageIndex].position.longitude,
-                beaconMessages[currentMessageIndex].position.altitude,
-              ],
-              rotation: [
-                beaconMessages[currentMessageIndex].rotation.yaw,
-                beaconMessages[currentMessageIndex].rotation.pitch,
-                beaconMessages[currentMessageIndex].rotation.roll,
-              ],
-            },
-          ]}
-        />
+        <>
+          <div style={{ position: 'absolute', top: 10, left: 10, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
+            <p><strong>Beacon Position:</strong></p>
+            <p>Latitude: {beaconMessages[0].position.latitude}</p>
+            <p>Longitude: {beaconMessages[0].position.longitude}</p>
+            <p>Altitude: {beaconMessages[0].position.altitude}</p>
+          </div>
+
+          <ThreeScene
+            beaconMessages={[
+              {
+                position: [
+                  beaconMessages[currentMessageIndex].position.latitude,
+                  beaconMessages[currentMessageIndex].position.longitude,
+                  beaconMessages[currentMessageIndex].position.altitude,
+                ],
+                rotation: [
+                  beaconMessages[currentMessageIndex].rotation.yaw,
+                  beaconMessages[currentMessageIndex].rotation.pitch,
+                  beaconMessages[currentMessageIndex].rotation.roll,
+                ],
+              },
+            ]}
+          />
+        </>
       ) : null}
 
+      <Orbit />
     </div>
-  );
-
-  return (
-    <Orbit></Orbit>
   );
 }
 
