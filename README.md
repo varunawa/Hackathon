@@ -52,10 +52,10 @@ This project is a 3D visualization tool for beacon data using React, TypeScript,
 ### **2. Visualization**
 
 **Files:**  
-- `testScene.tsx`  
-- `App.tsx`  
-- `orbit.js`  
-- `globe.js`  
+ `testScene.tsx`  
+ `App.tsx`  
+ `orbit.js`  
+ `globe.js`  
 
 **Description:**  
 - **ThreeScene.tsx**: Responsible for rendering the 3D scene using Three.js. The position, rotation, and acceleration are updated based on the beacon data. The cube represents the beacon in the 3D scene.  
@@ -68,19 +68,19 @@ This project is a 3D visualization tool for beacon data using React, TypeScript,
 - (d) Visual representation of both position and orientation, based on the incoming beacon data, is included.
 
 **Files Referenced:**
-- `orbit.js`: Handles the rendering of the satellite and Earth model, including updating satellite position and rotation based on beacon data&#8203;:contentReference[oaicite:0]{index=0}.  
-- `globe.js`: Handles the rendering of Earth and its associated visuals, including atmosphere and clouds&#8203;:contentReference[oaicite:1]{index=1}.  
-- `getStarfield.js`: Generates the background starfield to enhance the 3D scene's appearance&#8203;:contentReference[oaicite:2]{index=2}.  
-- `getFresnelMat.js`: Implements the Fresnel material effect for visual glow&#8203;:contentReference[oaicite:3]{index=3}.
+ `orbit.js`: Handles the rendering of the satellite and Earth model, including updating satellite position and rotation based on beacon data.  
+ `globe.js`: Handles the rendering of Earth and its associated visuals, including atmosphere and clouds.  
+ `getStarfield.js`: Generates the background starfield to enhance the 3D scene's appearance.  
+ `getFresnelMat.js`: Implements the Fresnel material effect for visual glow.
 
 ---
 
 ### **3. User Interaction**
 
 **Files:**  
-- `testScene.tsx`  
-- `App.tsx`  
-- `orbit.js`  
+ `testScene.tsx`  
+ `App.tsx`  
+ `orbit.js`  
 
 **Description:** The project uses `OrbitControls` from `@react-three/drei` to allow users to rotate and zoom the 3D visualization of the beacon. The user can switch between views (position, orientation, or acceleration) using buttons, which update the visualization based on the selected view.  
 **Requirement Addressed:** This satisfies the requirement of user interaction, enabling them to manipulate the 3D scene and switch between different data views.
@@ -90,7 +90,7 @@ This project is a 3D visualization tool for beacon data using React, TypeScript,
 ### **4. Real-Time Updates**
 
 **Files:**  
-- `App.tsx`  
+ `App.tsx`  
 
 **Description:** The real-time updates are handled by iterating over the beacon messages and updating the visualization at regular intervals (every 2 seconds). The tool uses the `useEffect` hook to schedule updates using `setInterval`. Each time the interval is triggered, the current message index is updated to show the next beacon message.  
 **Requirement Addressed:** The `useEffect` hook starts an interval that iterates over the beacon messages every 2 seconds. When a new message is available, the tool updates the current message index (`currentMessageIndex`) to display the next message. Once all the messages have been processed, the interval is cleared, preventing further updates.
