@@ -10,6 +10,7 @@ function App() {
   const [beaconMessages, setBeaconMessages] = useState<BeaconMessage[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [currentMessageIndex, setCurrentMessageIndex] = useState<number>(0);
+  const [dataView, setDataView] = useState<string>('position');
 
   useEffect(() => {
     fetch('/updated_beacon_output.txt')
