@@ -62,14 +62,43 @@ function App() {
           <div
             style={{
               position: 'absolute',
-              top: 10,
-              left: '10%',
+              top: 20,
+              left: 413, // Adjust this value to move it more to the right
               backgroundColor: 'rgba(255, 255, 255, 0.8)',
               padding: '10px',
               borderRadius: '5px',
               width: '250px',
+              zIndex: 1000, // Ensure it's above other elements
             }}
           >
+            {dataView === 'position' && (
+              <>
+                <p><strong>Beacon Position:</strong></p>
+                <p>Latitude: {beaconMessages[currentMessageIndex].position.latitude}</p>
+                <p>Longitude: {beaconMessages[currentMessageIndex].position.longitude}</p>
+                <p>Altitude: {beaconMessages[currentMessageIndex].position.altitude}</p>
+              </>
+            )}
+
+            {dataView === 'orientation' && (
+              <>
+                <p><strong>Beacon Orientation:</strong></p>
+                <p>Yaw: {beaconMessages[currentMessageIndex].rotation.yaw}</p>
+                <p>Pitch: {beaconMessages[currentMessageIndex].rotation.pitch}</p>
+                <p>Roll: {beaconMessages[currentMessageIndex].rotation.roll}</p>
+              </>
+            )}
+
+            {dataView === 'acceleration' && (
+              <>
+                <p><strong>Beacon Gyroscopic Acceleration:</strong></p>
+                <p>Yaw: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.yaw}</p>
+                <p>Pitch: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.pitch}</p>
+                <p>Roll: {beaconMessages[currentMessageIndex].gyroscopicAcceleration.roll}</p>
+              </>
+            )}
+
+
             <div>
               <button onClick={() => setDataView('position')}>Position</button>
               <button onClick={() => setDataView('orientation')}>Orientation</button>
@@ -77,17 +106,14 @@ function App() {
             </div>
           </div>
 
-          <div style={{ position: 'absolute', top: 30, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
-
-          </div>
 
 
-            <Orbit
-              currentCoordinates={currentData.position}
-              rotation={currentData.rotation}
-              acceleration={currentData.gyroscopicAcceleration}
-              dataView={dataView}
-            />
+          <Orbit
+            currentCoordinates={currentData.position}
+            rotation={currentData.rotation}
+            acceleration={currentData.gyroscopicAcceleration}
+            dataView={dataView}
+          />
 
         </>
       ) : (
