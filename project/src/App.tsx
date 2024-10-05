@@ -63,9 +63,9 @@ function App() {
         <>
           <div style={{ position: 'absolute', top: 10, left: 400, backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '10px', borderRadius: '5px' }}>
             <p><strong>Beacon Position:</strong></p>
-            <p>Latitude: {beaconMessages[currentMessageIndex].position.latitude}</p>
-            <p>Longitude: {beaconMessages[currentMessageIndex].position.longitude}</p>
-            <p>Altitude: {beaconMessages[currentMessageIndex].position.altitude}</p>
+            <p>Latitude: {beaconMessages[0].position.latitude}</p>
+            <p>Longitude: {beaconMessages[0].position.longitude}</p>
+            <p>Altitude: {beaconMessages[0].position.altitude}</p>
           </div>
 
           <div>
