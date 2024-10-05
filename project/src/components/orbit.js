@@ -1,50 +1,92 @@
+import React, { useEffect } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import earthTexture from '../assets/earth.jpg';
+import starsTexture from '../assets/stars.jpg';
+import beaconTexture from '../assets/beacon.jpg';
 
-import earthTexture from '../img/earth.jpg';
+const Orbit = () => {
+  useEffect(() => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
 
-const renderer = new THREE.WebGLRenderer();
+    // Create the scene
+    const scene = new THREE.Scene();
 
-document.body.appendChild(renderer.domElement);
-const scene = new THREE.Scene();
+    // Create the camera
+    const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
+    camera.position.set(0, 0, 100); // Set a good initial position
 
-const camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-);
+    // Create the WebGL Renderer
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(w, h); // Set initial size
+    document.body.appendChild(renderer.domElement);
 
-const orbit = new OrbitControls(camera, renderer.domeElement);
-camera.position.set(-90,140,140);
-orbit.update();
+    // Initialize OrbitControls
+    const orbit = new OrbitControls(camera, renderer.domElement);
+    orbit.enableDamping = true; // Smooth the controls
+    orbit.dampingFactor = 0.25;  // Set damping factor
 
-const ambientLight = new THREE.AmbientLight(0x333333);
-scene.add(ambientLight);
+    // Add ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Brighter light
+    scene.add(ambientLight);
 
-const cubeTextureLoader = new THREE.CubeTextureLoader();
-scene.background = cubeTextureLoader.load([
-    starsTexture
-]);
+    // Load stars background texture for the scene
+    const cubeTextureLoader = new THREE.CubeTextureLoader();
+    scene.background = cubeTextureLoader.load([
+      starsTexture,
+      starsTexture,
+      starsTexture,
+      starsTexture,
+      starsTexture,
+      starsTexture,
+    ]);
 
-const textureLoader = new THREE.TextureLoader();
+    // Load earth texture
+    const textureLoader = new THREE.TextureLoader();
+    const earthGeo = new THREE.SphereGeometry(16, 30, 30);
+    const earthMat = new THREE.MeshBasicMaterial({
+      map: textureLoader.load(earthTexture),
+    });
+    const earth = new THREE.Mesh(earthGeo, earthMat);
+    scene.add(earth);
 
-const earthGeo = new THREE.SphereGeometry(10, 15, 15);
-const earthMat = new THREE.MeshBasicMaterial({
-    map: textureLoader.load(earthTexture)
-});
-const earth = new THREE.Mesh(earthGeo, earthMat);
-scene.add(earth);
+    // Load beacon texture and create a new mesh for it
+    const beaconGeo = new THREE.SphereGeometry(2, 30, 30);
+    const beaconMat = new THREE.MeshBasicMaterial({
+      map: textureLoader.load(beaconTexture),
+    });
+    const beacon = new THREE.Mesh(beaconGeo, beaconMat);
+    earth.add(beacon); // Add beacon as a child of the earth mesh
+    beacon.position.set(20, 0, 0); // Position the beacon
 
+    // Animation loop
+    const animate = () => {
+      earth.rotateY(0.004); // Rotate earth
+      orbit.update(); // Update controls
+      renderer.render(scene, camera);
+    };
 
-function animate() {
-    renderer.render(scene, camera);
-}
+    renderer.setAnimationLoop(animate);
 
-renderer.setAnimationLoop(animate);
+    // Resize event listener to adjust camera and renderer when window is resized
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
 
-window.addEventListener('resize', funciton () {
-    camera.aspect = window.innderWIdth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup function to dispose of the renderer and remove event listener on component unmount
+    return () => {
+      renderer.dispose();
+      window.removeEventListener('resize', handleResize);
+      document.body.removeChild(renderer.domElement);
+    };
+  }, []);
+
+  return null; // The canvas is added directly to the body
+};
+
+export default Orbit;
