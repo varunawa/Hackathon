@@ -1,11 +1,12 @@
-import './App.css'
-import { Key, useEffect, useState } from 'react'
-import ThreeScene from './components/testScene'
+import './App.css';
+import { useEffect, useState } from 'react';
 import { BeaconMessage, readAndParseBeaconMessages } from './utils/parsing';
 
+
 function App() {
-  const [, setBeaconMessages] = useState<BeaconMessage[]>([]); // Change the declaration of setBeaconMessages to include the correct setter function signature
-  const [, setError] = useState<string | null>(null);
+  // Store the parsed beacon messages and errors
+  const [, setBeaconMessages] = useState<BeaconMessage[]>([]);  // State to hold the parsed messages
+  const [, setError] = useState<string | null>(null);  // State to hold error messages
 
   useEffect(() => {
     // Fetch the raw data from the text file in the public folder
@@ -24,21 +25,11 @@ function App() {
       })
       .catch(err => {
         if (err instanceof Error) {
-          setError('Error loading file: ' + err.message); // Update the code to properly handle the setError state
+          setError('Error loading file: ' + err.message); // Handle any fetch errors
         }
       });
   }, []);
-  return (
-    <div className="App">
-      <ThreeScene />
-    </div>
 
-    /*
-    <>
-        <Globe></Globe>
-    </>
-    */
-  );
 }
 
 export default App;
