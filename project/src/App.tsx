@@ -36,7 +36,7 @@ function App() {
   return (
 
     <div className="App">
-      <h1>Parsed Beacon Messages</h1>
+      <h1>Beacon 3D Visualisation</h1>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
       
